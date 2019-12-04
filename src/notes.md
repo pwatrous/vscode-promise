@@ -1,19 +1,29 @@
-// To better understand the VSCode extension AP we cloned a spell checker extension.
-// We chose this extension because it demonstrates how to use the API to to underline errors.
-// These notes were gathered from this processes.
+#### To better understand the VSCode extension AP we cloned a spell checker extension.
+#### We chose this extension because it demonstrates how to use the API to to underline errors.
+#### These notes were gathered from this processes.
+<br>
 
-// Import the  VSCode extension API
+##### Import the  VSCode extension API
+
+```
 import * as vscode from 'vscode';
+```
+<br>
 
-// This was called in the extension.ts file.
-// All it does in instantiate and call a class the holds the core code.
+##### This was called in the extension.ts file.
+##### All it does in instantiate and call a class the holds the core code.
+
+```
 export function activate(context: vscode.ExtensionContext): void {
 	let linter = new SpellProvider();
 
 	linter.activate(context);
 }
+```
+<br>
 
-// This is the public facing method this is called by the extension.ts file.
+##### This is the public facing method this is called by the extension.ts file.
+```
 public activate(context: vscode.ExtensionContext) {
 
 let subscriptions: vscode.Disposable[] = context.subscriptions;
@@ -25,19 +35,29 @@ vscode.workspace.onDidChangeTextDocument(this.TriggerDiffDiagnostics, this, subs
 // Here is where promiseKeeper would be called.
 
 }
+```
+<br>
 
-// Called the check the file when the file changes.
+##### Called the check the file when the file changes.
+```
 private TriggerDiffDiagnostics(event: vscode.TextDocumentChangeEvent) {
 	this.TriggerDiagnostics(event.document);
 }
+```
+<br>
 
-// The code for getting the file's text.
+##### The code for getting the file's text.
+```
 // document = event.document
 document: vscode.TextDocument
 let docToCheck = document.getText();
+```
+<br>
 
-// Code for underlining code in the file.
+##### Code for underlining code in the file.
+```
 let lineRange = new vscode.Range(problem.startLine, problem.startChar, problem.endLine, problem.endChar);
 let loc = new vscode.Location(document.uri, lineRange);
 
 let diag = new vscode.Diagnostic(lineRange, problem.message, this.convertSeverity(problem.type));
+```
